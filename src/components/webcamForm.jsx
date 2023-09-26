@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { Col, Form, Row } from "react-bootstrap";
-
 import Webcam from "react-webcam";
-
+import { Col, Form, Row } from "react-bootstrap";
+import { BsFillCameraFill } from 'react-icons/bs';
 
 const WebcamForm = ({ label }) => {
-    const [deviceId, setDeviceId] = useState({});
+    const [showCamera, setShowCamera] = useState(false);
     const [devices, setDevices] = useState([]);
 
     const handleDevices = useCallback(
@@ -22,23 +21,20 @@ const WebcamForm = ({ label }) => {
     );
 
     return (
-        <>
-            <Row>
-                <Col className="col-3">
-                    <Form.Label className="col-4 h6">{label}:</Form.Label>
-                </Col>
-                <Col className="col-4">
-                    {devices.map((device, key) => (
-                        <div>
-                            <Webcam audio={false} videoConstraints={{ deviceId: device.deviceId }} />
-                            {device.label || `Device ${key + 1}`}
-                        </div>
-
-                    ))}
-                </Col>
-
-            </Row>
-        </>
+        <Row>
+            <Col className="col-3" style={{ textAlign: "right" }}>
+                <Form.Label className="col-4 h6">{label}:</Form.Label>
+            </Col>
+            <Col className="col-2">
+                <BsFillCameraFill type="button" className="h3 mt-1" onClick={() => { setShowCamera(!showCamera) }} />
+                {devices.map((device) => (
+                    <div>
+                        {showCamera && <Webcam audio={false} videoConstraints={{ deviceId: device.deviceId }} />}
+                    </div>
+                ))}
+            </Col>
+            <Col className="col-6"></Col>
+        </Row>
     );
 };
 
