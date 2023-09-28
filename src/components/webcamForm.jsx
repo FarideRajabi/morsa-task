@@ -52,7 +52,6 @@ const WebcamForm = ({ label }) => {
             </div>
         </>
     );
-
 }
 
 export default WebcamForm;
