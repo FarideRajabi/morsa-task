@@ -7,16 +7,20 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const WebcamForm = ({ label }) => {
 
+    //useState Hooks
     const [showCamera, setShowCamera] = useState(false);
     const [imgSrc, setImgSrc] = useState(null);
 
+    //useRef Hooks
     const webcamRef = useRef(null);
 
+    // create capture image function
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImgSrc(imageSrc);
     }, [webcamRef]);
 
+    // create delete image function
     const retake = () => {
         setImgSrc(null);
     };
@@ -35,7 +39,7 @@ const WebcamForm = ({ label }) => {
                 <Col className="col-8">
                     {!!imgSrc && (<>
                         <img src={imgSrc} alt="webcam" className="w-50" />
-                        <AiOutlineClose type="button" onClick={retake} className="mb-5" />
+                        <AiOutlineClose type="button" onClick={retake} className="text-danger" style={{ marginTop: "-100px" }} />
                     </>
                     )}
                 </Col>
@@ -43,8 +47,8 @@ const WebcamForm = ({ label }) => {
             <div>
                 {!!showCamera && !imgSrc && <div className="mx-auto stiky-top text-center">
                     <Webcam
-                        height={400}
-                        width={500}
+                        height={300}
+                        width="300vw"
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
                     />
